@@ -6,7 +6,7 @@
     "homepage": "https://github.com/InstaWP/cli-package",
     "license": "MIT",
     "require": {
-        "php": ">=5.6",
+        "php": ">= 7.4.0",
         "instawp/connect-helpers": "dev-main"
     },
     "authors": [
@@ -44,11 +44,6 @@
 		]
 	},
     "config": {
-        "process-timeout": 7200,
-        "sort-packages": true,
-		"optimize-autoloader": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+		"optimize-autoloader": true
 	}
 }
