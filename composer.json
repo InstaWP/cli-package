@@ -1,17 +1,13 @@
 {
     "name": "instawp/cli-package",
     "type": "wp-cli-package",
-    "description": "",
-    "keywords": ["wp-cli"],
+    "description": "WP CLI package for InstaWP",
+    "keywords": [ "wp-cli" ],
     "homepage": "https://github.com/InstaWP/cli-package",
     "license": "MIT",
     "require": {
         "php": ">=5.6",
-        "wp-cli/wp-cli": "^2.5",
         "instawp/connect-helpers": "dev-main"
-    },
-    "require-dev": {
-        "wp-cli/wp-cli-tests": "^3.0.11"
     },
     "authors": [
         {

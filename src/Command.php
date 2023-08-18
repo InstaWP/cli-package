@@ -34,7 +34,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Get Site Inventory data.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -49,7 +49,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Get Debug Logs.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -64,7 +64,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Get WordPress Config.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -79,7 +79,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Set WordPress Config.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -94,7 +94,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Delete WordPress Config.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -109,7 +109,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Install Plugin and Theme.
+	 * Clear WordPress Cache.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
