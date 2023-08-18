@@ -1,0 +1,58 @@
+{
+    "name": "instawp/cli-package",
+    "type": "wp-cli-package",
+    "description": "",
+    "keywords": ["wp-cli"],
+    "homepage": "https://github.com/InstaWP/cli-package",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.6",
+        "wp-cli/wp-cli": "^2.5",
+        "instawp/connect-helpers": "dev-main"
+    },
+    "require-dev": {
+        "wp-cli/wp-cli-tests": "^3.0.11"
+    },
+    "authors": [
+        {
+            "name": "Sayan Datta",
+            "email": "iamsayan@protonmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:InstaWP/connect-helpers.git"
+        }
+    ],
+    "support": {
+		"issues": "https://github.com/InstaWP/cli-package/issues",
+		"source": "https://github.com/InstaWP/cli-package"
+	},
+    "autoload": {
+        "psr-4": {
+            "InstaWP\\CLI\\": "src/"
+        },
+        "files": [
+            "cli-package.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "build": [
+			"composer dump-autoload"
+		],
+        "build-nd": [
+			"composer dump-autoload --no-dev"
+		]
+	},
+    "config": {
+        "process-timeout": 7200,
+        "sort-packages": true,
+		"optimize-autoloader": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+	}
+}
