@@ -33,8 +33,6 @@
             "cli-package.php"
         ]
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "build": [
 			"composer dump-autoload"
