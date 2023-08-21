@@ -4,7 +4,7 @@
     "description": "WP CLI package for InstaWP",
     "keywords": [ "wp-cli" ],
     "homepage": "https://github.com/InstaWP/cli-package",
-    "license": "MIT",
+    "license": "GPL-2.0-or-later",
     "require": {
         "php": ">= 7.4.0",
         "instawp/connect-helpers": "dev-main"
@@ -12,7 +12,7 @@
     "authors": [
         {
             "name": "Sayan Datta",
-            "email": "iamsayan@protonmail.com"
+            "email": "sayan@instawp.com"
         }
     ],
     "repositories": [
