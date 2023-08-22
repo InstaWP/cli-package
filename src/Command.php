@@ -122,4 +122,34 @@ class Command extends WP_CLI_Command {
 
 		WP_CLI::line( json_encode( $response ) );
 	}
+
+	/**
+	 * File Manager.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand file-manager
+	 */
+	public function file_manager( $args = [], $assoc_args = [] ): void {
+		$file_manager = new Helpers\FileManager();
+		$response     = $file_manager->get();
+
+		WP_CLI::line( json_encode( $response ) );
+	}
+
+	/**
+	 * Database Manager.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand database-manager
+	 */
+	public function database_manager( $args = [], $assoc_args = [] ): void {
+		$database_manager = new Helpers\DatabaseManager();
+		$response         = $database_manager->get();
+
+		WP_CLI::line( json_encode( $response ) );
+	}
 }
