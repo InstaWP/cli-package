@@ -4,10 +4,12 @@
     "description": "WP CLI package for InstaWP",
     "keywords": [ "wp-cli" ],
     "homepage": "https://github.com/InstaWP/cli-package",
-    "license": "GPL-2.0-or-later",
+    "license": "MIT",
     "require": {
-        "php": ">= 7.4.0",
-        "instawp/connect-helpers": "^1.0.0"
+        "php": ">= 7.4.0"
+    },
+    "require-dev": {
+        "instawp/connect-helpers": "dev-main"
     },
     "authors": [
         {
