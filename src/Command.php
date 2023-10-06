@@ -154,7 +154,7 @@ class Command extends WP_CLI_Command {
 	}
 
 	/**
-	 * Set WordPress Config.
+	 * Set InstaWP API Key.
 	 * 
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
@@ -166,6 +166,21 @@ class Command extends WP_CLI_Command {
 		$response  = $wp_option->update( [
 			'instawp_api_key' => $args[0],
 		] );
+
+		WP_CLI::line( json_encode( $response ) );
+	}
+
+	/**
+	 * Set WordPress Config.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand set-option
+	 */
+	public function set_option( $args = [], $assoc_args = [] ): void {
+		$wp_option = new Helpers\Option();
+		$response  = $wp_option->update( $assoc_args );
 
 		WP_CLI::line( json_encode( $response ) );
 	}
