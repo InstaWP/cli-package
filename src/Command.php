@@ -167,4 +167,18 @@ class Command extends WP_CLI_Command {
 
 		WP_CLI::line( json_encode( $response ) );
 	}
+
+	/**
+	 * Get Site Usage.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand get-site-usage
+	 */
+	public function get_site_usage( $args = [], $assoc_args = [] ): void {
+		$response = Helper::get_directory_info( ABSPATH );
+
+		WP_CLI::line( json_encode( $response ) );
+	}
 }
