@@ -122,4 +122,63 @@ class Command extends WP_CLI_Command {
 
 		WP_CLI::line( json_encode( $response ) );
 	}
+
+	/**
+	 * File Manager.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand file-manager
+	 */
+	public function file_manager( $args = [], $assoc_args = [] ): void {
+		$file_manager = new Helpers\FileManager();
+		$response     = $file_manager->get();
+
+		WP_CLI::line( json_encode( $response ) );
+	}
+
+	/**
+	 * Database Manager.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand database-manager
+	 */
+	public function database_manager( $args = [], $assoc_args = [] ): void {
+		$database_manager = new Helpers\DatabaseManager();
+		$response         = $database_manager->get();
+
+		WP_CLI::line( json_encode( $response ) );
+	}
+
+	/**
+	 * Set WordPress Config.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand set-option
+	 */
+	public function set_option( $args = [], $assoc_args = [] ): void {
+		$wp_option = new Helpers\Option();
+		$response  = $wp_option->update( $assoc_args );
+
+		WP_CLI::line( json_encode( $response ) );
+	}
+
+	/**
+	 * Get Site Usage.
+	 * 
+	 * @param array $args       Indexed array of positional arguments.
+	 * @param array $assoc_args Associative array of associative arguments.
+	 * 
+	 * @subcommand get-site-usage
+	 */
+	public function get_site_usage( $args = [], $assoc_args = [] ): void {
+		$response = Helper::get_directory_info( ABSPATH );
+
+		WP_CLI::line( json_encode( $response ) );
+	}
 }

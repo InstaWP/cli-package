@@ -6,13 +6,15 @@
     "homepage": "https://github.com/InstaWP/cli-package",
     "license": "MIT",
     "require": {
-        "php": ">= 7.4.0",
+        "php": ">= 7.4.0"
+    },
+    "require-dev": {
         "instawp/connect-helpers": "dev-main"
     },
     "authors": [
         {
             "name": "Sayan Datta",
-            "email": "iamsayan@protonmail.com"
+            "email": "sayan@instawp.com"
         }
     ],
     "repositories": [

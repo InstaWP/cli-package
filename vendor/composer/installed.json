@@ -101,5 +101,8 @@
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "instawp/connect-helpers",
+        "wp-cli/wp-config-transformer"
+    ]
 }
