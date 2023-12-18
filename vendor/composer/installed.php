@@ -3,7 +3,7 @@
         'name' => 'instawp/cli-package',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '638a2892420b35cc460c088fcb7b017339284723',
+        'reference' => '980452092edf6e160fe4b46c077fa29b9c484349',
         'type' => 'wp-cli-package',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'instawp/cli-package' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '638a2892420b35cc460c088fcb7b017339284723',
+            'reference' => '980452092edf6e160fe4b46c077fa29b9c484349',
             'type' => 'wp-cli-package',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'instawp/connect-helpers' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '649c706c4c3c338b902a4780e6aaa0db0670f674',
+            'reference' => '5734715be7461fb67362020db28a60bebdb6aa59',
             'type' => 'library',
             'install_path' => __DIR__ . '/../instawp/connect-helpers',
             'aliases' => array(
