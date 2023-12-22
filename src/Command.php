@@ -72,7 +72,7 @@ class Command extends WP_CLI_Command {
 	 * @subcommand get-config
 	 */
 	public function get_config( $args = [], $assoc_args = [] ): void {
-		$wp_config = new Helpers\WPConfig( $args );
+		$wp_config = new Helpers\WPConfig( $args, true );
 		$response  = $wp_config->fetch();
 
 		WP_CLI::line( json_encode( $response ) );
@@ -87,7 +87,7 @@ class Command extends WP_CLI_Command {
 	 * @subcommand set-config
 	 */
 	public function set_config( $args = [], $assoc_args = [] ): void {
-		$wp_config = new Helpers\WPConfig( $assoc_args );
+		$wp_config = new Helpers\WPConfig( $assoc_args, true );
 		$response  = $wp_config->update();
 
 		WP_CLI::line( json_encode( $response ) );
@@ -102,7 +102,7 @@ class Command extends WP_CLI_Command {
 	 * @subcommand delete-config
 	 */
 	public function delete_config( $args = [], $assoc_args = [] ): void {
-		$wp_config = new Helpers\WPConfig( $args );
+		$wp_config = new Helpers\WPConfig( $args, true );
 		$response  = $wp_config->delete();
 
 		WP_CLI::line( json_encode( $response ) );
