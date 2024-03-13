@@ -1,6 +1,4 @@
 <?php
-declare( strict_types=1 );
-
 namespace InstaWP\CLI;
 
 use WP_CLI;
@@ -15,7 +13,7 @@ class Command extends WP_CLI_Command {
 	 * @param array $args       Indexed array of positional arguments.
 	 * @param array $assoc_args Associative array of associative arguments.
 	 */
-	public function install( $args = [], $assoc_args = [] ): void {
+	public function install( $args = [], $assoc_args = [] ) {
 		$params = [];
 		foreach ( $args as $arg ) {
 			$arg      = explode( ',', $arg );
@@ -41,7 +39,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand get-inventory
 	 */
-	public function inventory( $args = [], $assoc_args = [] ): void {
+	public function inventory( $args = [], $assoc_args = [] ) {
 		$inventory = new Helpers\Inventory();
 		$response  = $inventory->fetch();
 
@@ -56,7 +54,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand get-logs
 	 */
-	public function logs( $args = [], $assoc_args = [] ): void {
+	public function logs( $args = [], $assoc_args = [] ) {
 		$debug_log = new Helpers\DebugLog();
 		$response  = $debug_log->fetch();
 
@@ -71,7 +69,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand get-config
 	 */
-	public function get_config( $args = [], $assoc_args = [] ): void {
+	public function get_config( $args = [], $assoc_args = [] ) {
 		$wp_config = new Helpers\WPConfig( $args );
 		$response  = $wp_config->fetch();
 
@@ -86,7 +84,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand set-config
 	 */
-	public function set_config( $args = [], $assoc_args = [] ): void {
+	public function set_config( $args = [], $assoc_args = [] ) {
 		$wp_config = new Helpers\WPConfig( $assoc_args );
 		$response  = $wp_config->update();
 
@@ -101,7 +99,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand delete-config
 	 */
-	public function delete_config( $args = [], $assoc_args = [] ): void {
+	public function delete_config( $args = [], $assoc_args = [] ) {
 		$wp_config = new Helpers\WPConfig( $args );
 		$response  = $wp_config->delete();
 
@@ -116,7 +114,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand clear-cache
 	 */
-	public function clear_cache( $args = [], $assoc_args = [] ): void {
+	public function clear_cache( $args = [], $assoc_args = [] ) {
 		$cache_api = new Helpers\Cache();
 		$response  = $cache_api->clean();
 
@@ -131,7 +129,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand file-manager
 	 */
-	public function file_manager( $args = [], $assoc_args = [] ): void {
+	public function file_manager( $args = [], $assoc_args = [] ) {
 		$file_manager = new Helpers\FileManager();
 		$response     = $file_manager->get();
 
@@ -146,7 +144,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand database-manager
 	 */
-	public function database_manager( $args = [], $assoc_args = [] ): void {
+	public function database_manager( $args = [], $assoc_args = [] ) {
 		$database_manager = new Helpers\DatabaseManager();
 		$response         = $database_manager->get();
 
@@ -161,7 +159,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand set-option
 	 */
-	public function set_option( $args = [], $assoc_args = [] ): void {
+	public function set_option( $args = [], $assoc_args = [] ) {
 		$wp_option = new Helpers\Option();
 		$response  = $wp_option->update( $assoc_args );
 
@@ -176,7 +174,7 @@ class Command extends WP_CLI_Command {
 	 * 
 	 * @subcommand get-site-usage
 	 */
-	public function get_site_usage( $args = [], $assoc_args = [] ): void {
+	public function get_site_usage( $args = [], $assoc_args = [] ) {
 		$response = Helper::get_directory_info( ABSPATH );
 
 		WP_CLI::line( json_encode( $response ) );
