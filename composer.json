@@ -6,7 +6,7 @@
     "homepage": "https://github.com/InstaWP/cli-package",
     "license": "MIT",
     "require": {
-        "php": ">= 7.4.0"
+        "php": ">= 5.6.0"
     },
     "require-dev": {
         "instawp/connect-helpers": "dev-main"
