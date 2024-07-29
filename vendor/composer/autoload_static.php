@@ -32,16 +32,21 @@ class ComposerStaticInitad91684a4d263d6c8937fbc7c23167b6
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'InstaWP\\CLI\\Command' => __DIR__ . '/../..' . '/src/Command.php',
+        'InstaWP\\Connect\\Helpers\\Activator' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Activator.php',
         'InstaWP\\Connect\\Helpers\\Cache' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Cache.php',
+        'InstaWP\\Connect\\Helpers\\Curl' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Curl.php',
         'InstaWP\\Connect\\Helpers\\DatabaseManager' => __DIR__ . '/..' . '/instawp/connect-helpers/src/DatabaseManager.php',
+        'InstaWP\\Connect\\Helpers\\Deactivator' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Deactivator.php',
         'InstaWP\\Connect\\Helpers\\DebugLog' => __DIR__ . '/..' . '/instawp/connect-helpers/src/DebugLog.php',
         'InstaWP\\Connect\\Helpers\\FileManager' => __DIR__ . '/..' . '/instawp/connect-helpers/src/FileManager.php',
         'InstaWP\\Connect\\Helpers\\Helper' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Helper.php',
         'InstaWP\\Connect\\Helpers\\Installer' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Installer.php',
         'InstaWP\\Connect\\Helpers\\Inventory' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Inventory.php',
         'InstaWP\\Connect\\Helpers\\Option' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Option.php',
+        'InstaWP\\Connect\\Helpers\\Uninstaller' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Uninstaller.php',
+        'InstaWP\\Connect\\Helpers\\Updater' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Updater.php',
         'InstaWP\\Connect\\Helpers\\WPConfig' => __DIR__ . '/..' . '/instawp/connect-helpers/src/WPConfig.php',
+        'InstaWP\\Connect\\Helpers\\WPScanner' => __DIR__ . '/..' . '/instawp/connect-helpers/src/WPScanner.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

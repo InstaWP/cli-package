@@ -1,30 +1,27 @@
 <?php
-declare( strict_types=1 );
-
 namespace InstaWP\Connect\Helpers;
 
 class Installer {
 
-    public array $defaults = [
+    public $defaults = [
         'slug'     => '',
         'source'   => 'wp.org',
         'type'     => 'plugin',
         'activate' => false
     ];
     
-    public array $args;
-    public string $slug;
-    public string $source;
-    public string $type;
-    public bool $activate;
-    public string $url;
-    public string $error;
+    public $args;
+    public $slug;
+    public $source;
+    public $type;
+    public $activate;
+    public $url;
 
     public function __construct( array $args = [] ) {
         $this->args = $args;
     }
 
-    public function start(): array {
+    public function start() {
 		if ( count( $this->args ) < 1 || count( $this->args ) > 5 ) {
 			return [
 				'success' => false,
@@ -41,19 +38,16 @@ class Installer {
             $this->type     = $args['type'];
             $this->activate = filter_var( $args['activate'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
             $this->url      = ( 'url' === $this->source ) ? $this->slug : '';
-            $this->error    = '';
 
-            $response = $this->install();
-
-            $results[ $index ] = array_merge( [
-				'slug' => $this->slug,
-			], $response );
+            $results[ $index ] = $this->install();
         }
 
         return $results;
     }
 
-	private function install(): array {
+	private function install() {
+        $data = [];
+
         try {
             if ( ! class_exists( 'WP_Upgrader' ) ) {
                 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
@@ -67,12 +61,22 @@ class Installer {
                 require_once ABSPATH . 'wp-admin/includes/class-theme-upgrader.php';
             }
 
-            if ( ! class_exists( 'WP_Ajax_Upgrader_Skin' ) ) {
-                require_once ABSPATH . 'wp-admin/includes/class-wp-ajax-upgrader-skin.php';
+            if ( ! class_exists( 'Automatic_Upgrader_Skin' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
             }
 
+            if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/file.php';
+            }
+
+            if ( ! function_exists( 'get_plugin_data' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            $skin = new \Automatic_Upgrader_Skin();
+
             if ( 'plugin' === $this->type ) {
-                $upgrader = new \Plugin_Upgrader( new \WP_Ajax_Upgrader_Skin() );
+                $upgrader = new \Plugin_Upgrader( $skin );
 
                 if ( 'wp.org' === $this->source ) {
                     if ( ! function_exists( 'plugins_api' ) ) {
@@ -103,17 +107,17 @@ class Installer {
                     ] );
 
                     if ( is_wp_error( $api ) ) {
-                        $this->error = $api->get_error_message();
+                        $error_message = $api->get_error_message();
                     } else if ( isset( $api->requires ) && ! is_wp_version_compatible( $api->requires ) ) {
-                        $this->error = sprintf( esc_html( 'Minimum required WordPress Version of this plugin is %s!' ), $api->requires );
+                        $error_message = sprintf( esc_html( 'Minimum required WordPress Version of this plugin is %s!' ), $api->requires );
                     }
                     
-                    if ( empty( $this->error ) && ! empty( $api->download_link ) ) {
+                    if ( empty( $error_message ) && ! empty( $api->download_link ) ) {
                         $this->url = $api->download_link;
                     }
                 }
             } elseif ( 'theme' === $this->type ) {
-                $upgrader = new \Theme_Upgrader( new \WP_Ajax_Upgrader_Skin() );
+                $upgrader = new \Theme_Upgrader( $skin );
 
                 if ( 'wp.org' === $this->source ) {
                     if ( ! function_exists( 'themes_api' ) ) {
@@ -131,49 +135,108 @@ class Installer {
                         ],
                     ] );
                     if ( is_wp_error( $api ) ) {
-                        $this->error = $api->get_error_message();
+                        $error_message = $api->get_error_message();
                     } else if ( ! empty( $api->download_link ) ) {
                         $this->url = $api->download_link;
                     }
                 }
             }
 
-            if ( empty( $this->error ) && $this->is_link_valid() ) {
+            if ( empty( $error_message ) && $this->is_link_valid() ) {
                 $result = $upgrader->install( $this->url, [
                     'overwrite_package' => true,
                 ] );
 
                 if ( ! $result || is_wp_error( $result ) ) {
-                    $this->error = is_wp_error( $result ) ? $result->get_error_message() : sprintf( esc_html( 'Installation failed! Please check minimum supported WordPress version of the %s' ), $this->type );
+                    $error_message = is_wp_error( $result ) ? $result->get_error_message() : sprintf( esc_html( 'Installation failed! Please check minimum supported WordPress version of the %s' ), $this->type );
                 } else {
-                    if ( true === $this->activate ) {
-                        if ( 'plugin' === $this->type ) {
-                            if ( ! function_exists( 'activate_plugin' ) ) {
+                    if ( ! function_exists( 'wp_clean_update_cache' ) || ! function_exists( 'wp_update_themes' ) || ! function_exists( 'wp_update_plugins' ) ) {
+                        require_once ABSPATH . 'wp-includes/update.php';
+                    }
+
+                    wp_clean_update_cache();
+                    wp_update_themes();
+                    wp_update_plugins();
+
+                    if ( 'plugin' === $this->type ) {
+                        $plugin_file = $upgrader->plugin_info();
+
+                        if ( $plugin_file ) {
+                            if ( true === $this->activate ) {
+                                if ( ! function_exists( 'activate_plugin' ) ) {
+                                    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+                                }
+
+                                activate_plugin( $plugin_file );
+                            }
+
+                            if ( ! function_exists( 'get_plugins' ) ) {
                                 require_once ABSPATH . 'wp-admin/includes/plugin.php';
                             }
 
-                            activate_plugin( $upgrader->plugin_info(), '', false, true );
-                        } elseif ( 'theme' === $this->type ) {
-                            if ( ! function_exists( 'switch_theme' ) ) {
+                            $active_plugins     = ( array ) get_option( 'active_plugins', [] );
+                            $plugin_update_data = get_site_transient( 'update_plugins' );
+                            $plugin_update_data = isset( $plugin_update_data->response ) ? $plugin_update_data->response : [];
+                            $plugins_data       = get_plugins();
+                            $plugin_data        = $plugins_data[ $plugin_file ];
+                            $slug               = explode( '/', $plugin_file );
+                            $data = [
+                                'slug'             => $slug[0],
+                                'name'             => $plugin_file,
+                                'version'          => $plugin_data['Version'],
+                                'activated'        => in_array( $plugin_file, $active_plugins, true ),
+                                'update_available' => array_key_exists( $plugin_file, $plugin_update_data ),
+                                'update_version'   => array_key_exists( $plugin_file, $plugin_update_data ) ? $plugin_update_data[ $plugin_file ]->new_version : '',
+                                'icon_url'         => 'https://ps.w.org/' . $slug[0] . '/assets/icon-128x128.png',
+                                'data'             => $plugin_data,
+                            ];
+                        }
+                    } elseif ( 'theme' === $this->type ) {
+                        $theme_info = $upgrader->theme_info();
+
+                        if ( $theme_info ) {
+                            if ( true === $this->activate ) {
+                                if ( ! function_exists( 'switch_theme' ) ) {
+                                    require_once ABSPATH . 'wp-includes/theme.php';
+                                }
+
+                                switch_theme( $theme_info->get_stylesheet() );
+                            }
+
+                            if ( ! function_exists( 'wp_get_themes' ) || ! function_exists( 'wp_get_theme' ) ) {
                                 require_once ABSPATH . 'wp-includes/theme.php';
                             }
 
-                            switch_theme( $upgrader->theme_info()->get_stylesheet() );
+                            $current_theme     = wp_get_theme();
+                            $theme_update_data = get_site_transient( 'update_themes' );
+                            $theme_update_data = isset( $theme_update_data->response ) ? $theme_update_data->response : [];
+                            $theme_object      = wp_get_theme( $theme_info->get_stylesheet() );
+                            $stylesheet        = $theme_object->get_stylesheet();
+
+                            $data = [
+                                'slug'             => $stylesheet,
+                                'version'          => $theme_object->get( 'Version' ),
+                                'parent'           => $stylesheet !== $current_theme->get_template() ? $theme_object->get_template() : '',
+                                'activated'        => $stylesheet === $current_theme->get_stylesheet(),
+                                'update_available' => array_key_exists( $stylesheet, $theme_update_data ),
+                                'update_version'   => array_key_exists( $stylesheet, $theme_update_data ) ? $theme_update_data[ $stylesheet ]['new_version'] : '',
+                            ];
                         }
                     }
                 }
             } else {
-                $this->error = esc_html( 'Provided URL is not valid!' );
+                $error_message = esc_html( 'Provided URL is not valid!' );
             }
         } catch( \Exception $e ) {
-            $this->error = $e->getMessage();
+            $error_message = $e->getMessage();
         }
 
-        $message = trim( $this->error );
+        $message = isset( $error_message ) ? trim( $error_message ) : '';
 
         return [
+            'success' => empty( $message ),
             'message' => empty( $message ) ? esc_html( 'Success!' ) : $message,
-            'status'  => empty( $message ),
+            'data'    => $data,
         ];
     }
 
@@ -182,7 +245,7 @@ class Installer {
      * 
 	 * @return bool
 	 */
-	private function is_link_valid(): bool {
+	private function is_link_valid() {
 		$is_valid = false;
 		if ( $this->url && filter_var( $this->url, FILTER_VALIDATE_URL ) ) {
 			$response = wp_remote_get( $this->url, [
