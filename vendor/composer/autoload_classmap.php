@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'InstaWP\\CLI\\Command' => $baseDir . '/src/Command.php',
     'InstaWP\\Connect\\Helpers\\Activator' => $vendorDir . '/instawp/connect-helpers/src/Activator.php',
     'InstaWP\\Connect\\Helpers\\Cache' => $vendorDir . '/instawp/connect-helpers/src/Cache.php',
     'InstaWP\\Connect\\Helpers\\Curl' => $vendorDir . '/instawp/connect-helpers/src/Curl.php',

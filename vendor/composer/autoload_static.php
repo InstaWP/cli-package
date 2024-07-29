@@ -32,6 +32,7 @@ class ComposerStaticInitad91684a4d263d6c8937fbc7c23167b6
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'InstaWP\\CLI\\Command' => __DIR__ . '/../..' . '/src/Command.php',
         'InstaWP\\Connect\\Helpers\\Activator' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Activator.php',
         'InstaWP\\Connect\\Helpers\\Cache' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Cache.php',
         'InstaWP\\Connect\\Helpers\\Curl' => __DIR__ . '/..' . '/instawp/connect-helpers/src/Curl.php',
